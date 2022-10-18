@@ -1,0 +1,42 @@
+#__price_calc .__price_input {
+	padding: 4px 8px;
+	width: 100%;
+	display: inline-block;
+	margin: 5px;
+	background: transparent;
+	border: 1px solid #bfbfbf;
+	box-sizing: border-box;
+	height: 30px;
+}
+#__price_calc select.__price_input {
+	padding: 6px;
+}
+#__price_calc table{
+	margin: auto;
+}
+#__price_calc .__price_disc {
+	color: red;
+}
+#__price_calc_data > div ,
+#__price_calc_result > div {
+	overflow: auto;
+}
+#__price_calc_data p,
+#__price_calc_result p{
+	text-align: center;
+}
+#__price_calc_data table,
+#__price_calc_result table{
+	min-width: 550px;
+	border: 1px solid;
+}
+#__price_calc_data td ,
+#__price_calc_result td {
+	padding: 5px;
+	border: 1px solid black;
+	text-align: left;
+}
+#__price_calc_result .fa-share {
+	border:  1px solid;
+	padding: 5px 10px;
+}
