@@ -21,7 +21,7 @@ window.__sheetson = {
 			cb(out,status,xhr);
 		});
 	},
-	'create': function(sheet,dt,cb) {
+	'insert': function(sheet,dt,cb) {
 		this.ajax('https://api.sheetson.com/v2/sheets/'+sheet,'POST',JSON.stringify(dt), function(out) {
 			if (out.rowIndex !== undefined)
 				out = {'ok':1,'out':out};
@@ -60,7 +60,7 @@ window.__sheetson = {
 	'list': function(sheet,skip,limit,cb) {
 		this.ajax('https://api.sheetson.com/v2/sheets/'+sheet,'GET',{'skip':skip,'limit':limit}, function(out) {
 			if (out.results !== undefined)
-				out = {'ok':1,'out':out};
+				out = {'ok':1,'out':out.results, 'hasNextPage':out.hasNextPage};
 			else
 				out = {'ok':0,'msg':'error'};
 			cb(out);
