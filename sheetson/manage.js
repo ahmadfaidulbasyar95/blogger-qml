@@ -21,7 +21,7 @@
 					var __sheetson_data  = [];
 					function __sheetson_data_load() {
 						if (__sheetson_sheet.lastIndex > 2) {
-							var limit = 3;
+							var limit = 100;
 							var skip  = __sheetson_sheet.lastIndex - limit;
 							if (skip < 2) {
 								limit -= 2 - skip;
