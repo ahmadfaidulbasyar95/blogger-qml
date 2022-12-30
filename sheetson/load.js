@@ -7,12 +7,17 @@
 			window.__sheetson.init(window.__sheetson_token);
 			window.__sheetson.get(window.__sheetson_sheet, id, function(out) {
 				if (out.ok) {
+					var orientation = __sheetson_load.data('orientation') ?? 'P';
+					var page_p      = __sheetson_load.data('margin') ?? 20;
+					var page_mw     = orientation == 'P' ? 210 : 297;
+					var page_w      = page_mw-page_p*2;
+					var page_o      = orientation == 'P' ? 'portrait' : 'landscape';
 					out.out.qrcode = '<span id="__sheetson_qrcode"></span>';
 					var __sheetson_load_ = __sheetson_load.html();
 					$.each(out.out, function(index, val) {
 						__sheetson_load_ = __sheetson_load_.replace(new RegExp(`\\[${index}\\]`, 'g'),val);
 					});
-					__sheetson_load.html(__sheetson_load_);
+					__sheetson_load.html('<div style="width: '+page_w+'mm; padding: '+page_p+'mm; ">'+__sheetson_load_+'</div>');
 					new QRCodeStyling({
 						width: 200,
 						height: 200,
@@ -25,14 +30,9 @@
 							margin: 5
 						}
 					}).append(document.getElementById('__sheetson_qrcode'));
-					var orientation = __sheetson_load.data('orientation') ?? 'P';
-					var margin      = __sheetson_load.data('margin') ?? '2.5';
-					var cmtopx      = 28;
-					var html_w      = orientation == 'P' ? 21*cmtopx : 29.7*cmtopx;
-					var html_p      = margin*cmtopx;
-					var page_o      = orientation == 'P' ? 'portrait' : 'landscape';
-					__sheetson_load.append('<style type="text/css"> @page {size: A4 '+page_o+'; margin: '+margin+'cm;} </style>');
-					$('<div style="text-align:center;"><button id="__sheetson_print" type="button" onclick="printJS(\'__sheetson_load\', \'html\')">&#128424 Print</button></div><style type="text/css"> #__sheetson_load {max-width: '+html_w+'px; margin: 5px; padding: '+html_p+'px; box-shadow: rgb(0 0 0 / 35%) 0px 0px 4px; } #__sheetson_load:before {content: ""; float: right; border-width: 0 40px 40px 0; border-style: solid; border-color: white white #dfdfdf #dfdfdf; margin: -48px; } #__sheetson_print {font-size: large; margin: 15px auto 30px auto; padding: 5px 10px; background-color: white; border: 1px solid #bdbdbd;}#__sheetson_print:hover {background-color: #e7e6e6;}</style>').insertAfter(__sheetson_load);
+					__sheetson_load.append('<style type="text/css"> @page {size: A4 '+page_o+'; margin: 0cm;} </style>');
+					$('<div style="text-align:center;max-width: '+page_mw+'mm;"><button id="__sheetson_print" type="button" onclick="printJS(\'__sheetson_load\', \'html\')">&#128424 Print</button></div><style type="text/css"> #__sheetson_load {max-width: '+page_mw+'mm; margin: 5px; box-shadow: rgb(0 0 0 / 35%) 0px 0px 4px; overflow: auto;} #__sheetson_load:before {content: ""; margin: -3px; position: absolute; border-width: 0 40px 40px 0; border-style: solid; border-color: white white #dfdfdf #dfdfdf;} #__sheetson_print {font-size: large; margin: 15px auto 50px auto; padding: 5px 10px; background-color: white; border: 1px solid #bdbdbd;}#__sheetson_print:hover {background-color: #e7e6e6;}</style>').insertAfter(__sheetson_load);
+					$('<style type="text/css"> #__sheetson_load:before {left: '+(__sheetson_load.width()-21)+'px;}</style>').insertAfter(__sheetson_load);
 				}else{
 					alert('Data tidak ditemukan');
 				}
