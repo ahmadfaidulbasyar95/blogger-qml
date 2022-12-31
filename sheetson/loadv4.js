@@ -33,8 +33,7 @@
 							}
 						}).append(document.getElementById('__sheetson_qrcode'));
 						__sheetson_load.append('<style type="text/css"> @page {size: A4 '+page_o+'; margin: 0cm;} </style>');
-						$('<div style="text-align:center;max-width: '+page_mw+'mm;margin:5px;"><button id="__sheetson_print" type="button" onclick="printJS(\'__sheetson_load\', \'html\')">&#128424 Print</button></div><style type="text/css"> #__sheetson_load {max-width: '+page_mw+'mm; margin: 5px; box-shadow: rgb(0 0 0 / 35%) 0px 0px 4px; overflow: auto;} #__sheetson_load:before {content: ""; margin: -3px; position: absolute; border-width: 0 40px 40px 0; border-style: solid; border-color: white white #dfdfdf #dfdfdf;} #__sheetson_print {font-size: x-large; margin: 15px auto 50px auto; padding: 5px 10px; background-color: white; border: 1px solid #bdbdbd;}#__sheetson_print:hover {background-color: #e7e6e6;}</style>').insertAfter(__sheetson_load);
-						$('<style type="text/css"> #__sheetson_load:before {left: '+(__sheetson_load.width()-21)+'px;}</style>').insertAfter(__sheetson_load);
+						$('<div style="max-width: '+page_mw+'mm;margin:5px;"><button id="__sheetson_print" type="button" onclick="printJS(\'__sheetson_load\', \'html\')">&#128424 Print</button><span style="position: relative;bottom: -42px;right: -3px;border-width: 0 25px 40px 0; border-style: solid; border-color: white white #dfdfdf #dfdfdf;float:right;"></span></div><style type="text/css"> #__sheetson_load {max-width: '+page_mw+'mm; margin: 0px 5px 50px 5px; box-shadow: rgb(0 0 0 / 35%) 0px 0px 4px; overflow: auto;} #__sheetson_print {font-size: x-large; padding: 5px 10px; background-color: white; border: 1px solid #bdbdbd;}#__sheetson_print:hover {background-color: #e7e6e6;}</style>').insertBefore(__sheetson_load);
 					}else{
 						__sheetson_load.html('<h2 style="margin:200px 0px; text-align:center;">Gagal Memuat Data !!</h2>');
 						setTimeout(function() {
