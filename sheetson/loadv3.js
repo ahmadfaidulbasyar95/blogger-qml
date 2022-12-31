@@ -6,7 +6,6 @@
 		if (__sheetson_load.length && window.__sheetson_token !== undefined && window.__sheetson_sheet !== undefined && id) {
 			window.__sheetson.init(window.__sheetson_token);
 			var __sheetson_load_ = __sheetson_load.html();
-			var __sheetson_qr_bg = __sheetson_load.find('img').first().attr('src');
 			__sheetson_load.html('<h2 style="margin:200px 0px; text-align:center;">Memuat Data ...<br>Mohon tunggu sebentar !!</h2>');
 			function __sheetson_load_f() {
 				window.__sheetson.get(window.__sheetson_sheet, id, function(out) {
@@ -26,11 +25,11 @@
 							height: 200,
 							type: "svg",
 							data: window.location.origin+window.location.pathname+'?i='+id,
-							image: __sheetson_qr_bg,
+							image: $('link[rel*=icon]').attr('href'),
 							imageOptions: {
 								crossOrigin: "anonymous",
-								imageSize:0.3,
-								margin: 4
+								imageSize:0.2,
+								margin: 3
 							}
 						}).append(document.getElementById('__sheetson_qrcode'));
 						__sheetson_load.append('<style type="text/css"> @page {size: A4 '+page_o+'; margin: 0cm;} </style>');
