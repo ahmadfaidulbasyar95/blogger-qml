@@ -55,7 +55,7 @@
 					__sheetson_body.on('click', '.__sheetson_edit', function(event) {
 						event.preventDefault();
 						$(this).hide().siblings('.__sheetson_save,.__sheetson_cancel').show().parents('tr').children('._field').each(function(index, el) {
-							$(this).html('<input type="text" name="input" value="'+$(this).text()+'" />');
+							$(this).html('<input type="text" name="input" value="'+$(this).html()+'" />');
 						});
 					});
 					__sheetson_body.on('click', '.__sheetson_cancel', function(event) {
