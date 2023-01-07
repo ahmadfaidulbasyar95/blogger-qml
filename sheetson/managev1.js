@@ -9,7 +9,7 @@
 					var html = '<form><div><select id="__sheetson_sheet">';
 					var __sheetson_sheets = out.out;
 					for(var i = 0, length1 = __sheetson_sheets.length; i < length1; i++){
-						__sheetson_sheets[i]
+						__sheetson_sheets[i].i = i;
 						html += '<option value="'+i+'">'+__sheetson_sheets[i].title+'</option>';
 					}
 					html += '</select></div><div><table><thead id="__sheetson_head"></thead><tbody id="__sheetson_body"></tbody></table></div><div><td><button type="button" id="__sheetson_more" style="display:none;">Load More</button></td></div></form>';
@@ -95,7 +95,7 @@
 							var el = $(this);
 							var dt = {};
 							var par = el.hide().parents('tr');
-							par.find('input').attr('readonly','readonly').each(function(index, el) {
+							par.find('._field input').attr('readonly','readonly').each(function(index, el) {
 								var v = $(this).val();
 								dt[__sheetson_sheet.field[index]] = v ? v : '-';
 							});
@@ -103,7 +103,8 @@
 								if (out.ok) {
 									window.__sheetson.update('List', {'lastIndex':out.out.rowIndex}, __sheetson_sheet.rowIndex, function(out) {
 										if (out.ok) {
-											__sheetson_sheets[$('#__sheetson_sheet').val()].lastIndex = out.out.lastIndex;
+											__sheetson_sheets[__sheetson_sheet.i].lastIndex = out.out.lastIndex;
+											__sheetson_head._id_show.val(parseInt(out.out.lastIndex)+1);
 										}
 									});
 									html = '<tr data-index="'+__sheetson_data.length+'"><td class="__id">'+out.out.rowIndex+'</td>';
@@ -113,9 +114,9 @@
 									html += '<td><button type="button" class="__sheetson_edit">Edit</button><button type="button" class="__sheetson_save" style="display:none;">Save</button><button type="button" class="__sheetson_cancel" style="display:none;">Cancel</button></td></tr>';
 									__sheetson_data.push(out.out);
 									__sheetson_body.prepend(html);
-									par.find('input').removeAttr('readonly').val('');
+									par.find('._field input').removeAttr('readonly').val('');
 								}else{
-									par.find('input').removeAttr('readonly');
+									par.find('._field input').removeAttr('readonly');
 								}
 								el.show();
 							});
@@ -130,16 +131,17 @@
 							window.__sheetson.get(__sheetson_sheet.name,2,function(out) {
 								if (out.ok) {
 									__sheetson_sheet.field = [];
-									html = ['<tr><td>ID</td>','<tr><td></td>'];
+									html = ['<tr><td>ID</td>','<tr><td><input type="text" name="input" /></td>'];
 									$.each(out.out, function(index, val) {
 										if (index != 'rowIndex') {
 											__sheetson_sheet.field.push(index);
 											html[0] += '<td>'+val+'</td>';
-											html[1] += '<td><input type="text" name="'+index+'" /></td>';
+											html[1] += '<td class="_field"><input type="text" name="input" /></td>';
 										}
 									});
 									html[0] += '<td></td></tr>';
 									__sheetson_head.html(html[0]+html[1]+'<td><button type="button" id="__sheetson_add">Add</button></td></tr>'+html[1]+'<td><button type="button">Search</button></td></tr>');
+									__sheetson_head._id_show = __sheetson_head.children('tr').eq(1).children('td').eq(0).children('input').val(parseInt(__sheetson_sheet.lastIndex)+1).attr('readonly','readonly');
 									__sheetson_body.html('');
 									__sheetson_data = [];
 									__sheetson_data_load();
