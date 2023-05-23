@@ -39,7 +39,7 @@
 							imageOptions: {
 								crossOrigin: "anonymous",
 								imageSize:0.2,
-								margin: Math.floor(qrsize/66)
+								margin: 3
 							}
 						}).append(iframe.document.getElementById('__sheetson_qrcode'));
 						$('#__sheetson_print').on('click', function(event) {
