@@ -12,6 +12,7 @@
 					if (out.ok) {
 						var orientation = __sheetson_load.data('orientation') ?? 'P';
 						var page_p      = __sheetson_load.data('margin') ?? 20;
+						var qrsize      = __sheetson_load.data('qrsize') ?? 200;
 						var page_mw     = orientation == 'P' ? 210 : 297;
 						var page_mh     = orientation == 'P' ? 297 : 210;
 						var page_w      = page_mw-page_p*2;
@@ -28,8 +29,8 @@
 						iframe.document.write(__sheetson_load_ );
 						iframe.document.close();
 						new QRCodeStyling({
-							width: 200,
-							height: 200,
+							width: qrsize,
+							height: qrsize,
 							type: "svg",
 							data: window.location.origin+window.location.pathname+'?i='+id,
 							image: $('link[rel*=icon]').attr('href'),
