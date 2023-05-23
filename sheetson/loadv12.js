@@ -49,7 +49,7 @@
 						});
 						$('#__sheetson_dl_img').on('click', function(event) {
 							event.preventDefault();
-							html2canvas(iframe.document.body).then(canvas => {
+							html2canvas(iframe.document.body,{allowTaint: true,useCORS: true}).then(canvas => {
 								simulateDownloadImageClick(canvas.toDataURL(), document.title);
 							});
 						});
