@@ -10,18 +10,20 @@
 			function __sheetson_load_f() {
 				window.__sheetson.get(window.__sheetson_sheet, id, function(out) {
 					if (out.ok) {
+						var page_sizes  = { 'A4':[210,297], 'A5':[148,210], 'A6':[105,148], 'A7':[74,105] };
 						var orientation = __sheetson_load.data('orientation') ?? 'P';
+						var page_size   = __sheetson_load.data('size') ?? 'A4';
 						var page_p      = __sheetson_load.data('margin') ?? 20;
 						var qrsize      = __sheetson_load.data('qrsize') ?? 200;
-						var page_mw     = orientation == 'P' ? 210 : 297;
-						var page_mh     = orientation == 'P' ? 297 : 210;
+						var page_mw     = orientation == 'P' ? page_sizes[page_size][0] : page_sizes[page_size][1];
+						var page_mh     = orientation == 'P' ? page_sizes[page_size][1] : page_sizes[page_size][0];
 						var page_w      = page_mw-page_p*2;
 						var page_o      = orientation == 'P' ? 'portrait' : 'landscape';
 						out.out.qrcode = '<span id="__sheetson_qrcode"></span>';
 						$.each(out.out, function(index, val) {
 							__sheetson_load_ = __sheetson_load_.replace(new RegExp(`\\[${index}\\]`, 'g'),val);
 						});
-						__sheetson_load_ = '<style type="text/css"> @page {size: A4 '+page_o+'; margin: 0cm;} body {margin:0px;} p {margin: 0px;line-height: 1.5em;} td {line-height: 1.5em;vertical-align: top;}</style><div style="width: '+page_w+'mm; padding: '+page_p+'mm; ">'+__sheetson_load_+'</div>';
+						__sheetson_load_ = '<style type="text/css"> @page {size: '+page_size+' '+page_o+'; margin: 0cm;} body {margin:0px;} p {margin: 0px;line-height: 1.5em;} td {line-height: 1.5em;vertical-align: top;}</style><div style="width: '+page_w+'mm; padding: '+page_p+'mm; ">'+__sheetson_load_+'</div>';
 						__sheetson_load.html('<div style="margin-bottom:5px;"><button id="__sheetson_print" type="button">&#128424 Print</button></div><style type="text/css"> #__sheetson_load {max-width: '+page_mw+'mm; margin: 0px 5px 50px 5px;} #__sheetson_print {font-size: x-large; padding: 5px 10px; background-color: white; border: 1px solid #bdbdbd;}#__sheetson_print:hover {background-color: #e7e6e6;}</style><iframe id="__sheetson_iframe" style="border:0px;width:100%;height:'+(page_mh+5)+'mm;box-shadow: rgb(0 0 0 / 35%) 0px 0px 4px;"></iframe>');
 						var iframe = document.getElementById('__sheetson_iframe');
 						iframe = iframe.contentWindow || ( iframe.contentDocument.document || iframe.contentDocument);
