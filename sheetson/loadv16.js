@@ -30,18 +30,23 @@
 						iframe.document.open();
 						iframe.document.write(__sheetson_load_ );
 						iframe.document.close();
-						new QRCodeStyling({
-							width: qrsize,
-							height: qrsize,
-							type: "svg",
-							data: window.location.origin+window.location.pathname+'?i='+id,
-							image: $('link[rel*=icon]').attr('href'),
-							imageOptions: {
-								crossOrigin: "anonymous",
-								imageSize:0.2,
-								margin: 3
-							}
-						}).append(iframe.document.getElementById('__sheetson_qrcode'));
+						imageToBase64($('link[rel*=icon]').attr('href')) .then((response) => {
+							new QRCodeStyling({
+								width: qrsize,
+								height: qrsize,
+								type: "svg",
+								data: window.location.origin+window.location.pathname+'?i='+id,
+								image: response,
+								imageOptions: {
+									crossOrigin: "anonymous",
+									imageSize:0.2,
+									margin: 3
+								}
+							}).append(iframe.document.getElementById('__sheetson_qrcode'));
+						})
+						.catch((error) => {
+							console.log(error);
+						});
 						$('#__sheetson_print').on('click', function(event) {
 							event.preventDefault();
 							iframe.focus();
@@ -50,15 +55,14 @@
 						$('#__sheetson_dl_img').on('click', function(event) {
 							event.preventDefault();
 							$('#__sheetson_dl_img').attr('disabled','disabled');
-							domtoimage.toPng(iframe.document.body)
-								.then(function (dataUrl) {
-									simulateDownloadImageClick(dataUrl, document.title);
-									$('#__sheetson_dl_img').removeAttr('disabled');
-								})
-								.catch(function (error) {
-									console.error('oops, something went wrong!', error);
-									$('#__sheetson_dl_img').removeAttr('disabled');
-								});
+							domtoimage.toPng(iframe.document.body).then(function (dataUrl) {
+								simulateDownloadImageClick(dataUrl, document.title);
+								$('#__sheetson_dl_img').removeAttr('disabled');
+							})
+							.catch(function (error) {
+								console.error('oops, something went wrong!', error);
+								$('#__sheetson_dl_img').removeAttr('disabled');
+							});
 						});
 					}else{
 						__sheetson_load.html('<h2 style="margin:200px 0px; text-align:center;">Gagal Memuat Data !!</h2>');
