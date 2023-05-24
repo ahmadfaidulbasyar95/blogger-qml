@@ -49,9 +49,16 @@
 						});
 						$('#__sheetson_dl_img').on('click', function(event) {
 							event.preventDefault();
-							html2canvas(iframe.document.body,{allowTaint: true,useCORS: true,backgroundColor: null,removeContainer: false}).then(canvas => {
-								simulateDownloadImageClick(canvas.toDataURL(), document.title);
-							});
+							$('#__sheetson_dl_img').attr('disabled','disabled');
+							domtoimage.toPng(iframe.document.body)
+								.then(function (dataUrl) {
+									simulateDownloadImageClick(dataUrl, document.title);
+									$('#__sheetson_dl_img').removeAttr('disabled');
+								})
+								.catch(function (error) {
+									console.error('oops, something went wrong!', error);
+									$('#__sheetson_dl_img').removeAttr('disabled');
+								});
 						});
 					}else{
 						__sheetson_load.html('<h2 style="margin:200px 0px; text-align:center;">Gagal Memuat Data !!</h2>');
