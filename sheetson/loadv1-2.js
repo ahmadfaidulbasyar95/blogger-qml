@@ -1,4 +1,3 @@
-							event.preventDefault();
 (function() {
 	window.addEventListener('load', function() { 
 		var __urlp          = new URLSearchParams(window.location.search); 
