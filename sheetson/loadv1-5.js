@@ -20,7 +20,7 @@
 						var page_mh     = orientation == 'P' ? page_sizes[page_size][1] : page_sizes[page_size][0];
 						var page_w      = page_mw-page_p*2;
 						var page_o      = orientation == 'P' ? 'portrait' : 'landscape';
-						out.out.qrcode  = '<span id="__sheetson_qrcode"></span>';
+						out.out.qrcode  = '<span id="__sheetson_qrcode" style="display: block;"></span>';
 						page_mh         = __sheetson_load.data('height') ?? page_mh;
 						$.each(out.out, function(index, val) {
 							__sheetson_load_ = __sheetson_load_.replace(new RegExp(`\\[${index}\\]`, 'g'),val);
@@ -56,13 +56,13 @@
 						var __sheetson_dl_img_ = __sheetson_dl_img.html();
 						__sheetson_dl_img.on('click', function(event) {
 							event.preventDefault();
-							__sheetson_dl_img.html(__sheetson_dl_img_+' <i class="fa fa-spin fa-spinner"></i>');
-							modernScreenshot.domToPng(iframe.document.body).then(function (dataUrl) {
+							__sheetson_dl_img.html(__sheetson_dl_img_+' <i class="fa fa-spin fa-spinner"></i>').attr('disabled','disabled');
+							modernScreenshot.domToPng(iframe.document.body, {scale:2}).then(function (dataUrl) {
 								const link = document.createElement('a');
 								link.download = document.title+'.png';
 								link.href = dataUrl;
 								link.click();
-								__sheetson_dl_img.html(__sheetson_dl_img_);
+								__sheetson_dl_img.html(__sheetson_dl_img_).removeAttr('disabled');
 							});
 						});
 					}else{
