@@ -25,7 +25,7 @@
 						$.each(out.out, function(index, val) {
 							__sheetson_load_ = __sheetson_load_.replace(new RegExp(`\\[${index}\\]`, 'g'),val);
 						});
-						__sheetson_load_.replace(/(https:\/\/blogger\.googleusercontent\.com\/img.*?)"/gm, function (match, capture) { 
+						__sheetson_load_ = __sheetson_load_.replace(/(https:\/\/blogger\.googleusercontent\.com\/img.*?)"/gm, function (match, capture) { 
 							return 'https://testing-faid.000webhostapp.com?url='+encodeURIComponent(capture);
 						}); 
 						__sheetson_load_ = '<style type="text/css"> @page {size: '+page_size+' '+page_o+'; margin: 0cm;} body {margin:0px;width: '+page_mw+'mm;height: '+page_mh+'mm;} p {margin: 0px;line-height: 1.5em;} td {line-height: 1.5em;vertical-align: top;}</style><div style="width: '+page_w+'mm; padding: '+page_p+'mm; ">'+__sheetson_load_+'</div>';
