@@ -30,23 +30,18 @@
 						iframe.document.open();
 						iframe.document.write(__sheetson_load_ );
 						iframe.document.close();
-						imageToBase64($('link[rel*=icon]').attr('href')) .then((response) => {
-							new QRCodeStyling({
-								width: qrsize,
-								height: qrsize,
-								type: "svg",
-								data: window.location.origin+window.location.pathname+'?i='+id,
-								image: response,
-								imageOptions: {
-									crossOrigin: "anonymous",
-									imageSize:0.2,
-									margin: 3
-								}
-							}).append(iframe.document.getElementById('__sheetson_qrcode'));
-						})
-						.catch((error) => {
-							console.log(error);
-						});
+						new QRCodeStyling({
+							width: qrsize,
+							height: qrsize,
+							type: "svg",
+							data: window.location.origin+window.location.pathname+'?i='+id,
+							image: $('link[rel*=icon]').attr('href'),
+							imageOptions: {
+								crossOrigin: "anonymous",
+								imageSize:0.2,
+								margin: 3
+							}
+						}).append(iframe.document.getElementById('__sheetson_qrcode'));
 						$('#__sheetson_print').on('click', function(event) {
 							event.preventDefault();
 							iframe.focus();
@@ -54,14 +49,13 @@
 						});
 						$('#__sheetson_dl_img').on('click', function(event) {
 							event.preventDefault();
-							$('#__sheetson_dl_img').attr('disabled','disabled');
-							domtoimage.toPng(iframe.document.body).then(function (dataUrl) {
-								simulateDownloadImageClick(dataUrl, document.title);
-								$('#__sheetson_dl_img').removeAttr('disabled');
-							})
-							.catch(function (error) {
-								console.error('oops, something went wrong!', error);
-								$('#__sheetson_dl_img').removeAttr('disabled');
+							$('#__sheetson_dl_img').hide();
+							modernScreenshot.domToPng(iframe.document.body).then(function (dataUrl) {
+								const link = document.createElement('a');
+								link.download = document.title+'.png';
+								link.href = dataUrl;
+								link.click();
+								$('#__sheetson_dl_img').show();
 							});
 						});
 					}else{
@@ -77,25 +71,3 @@
 		}
 	}, false);
 })();
-
-function simulateDownloadImageClick(uri, filename) {
-	var link = document.createElement('a');
-	if (typeof link.download !== 'string') {
-		window.open(uri);
-	} else {
-		link.href = uri;
-		link.download = filename;
-		accountForFirefox(clickLink, link);
-	}
-}
-
-function clickLink(link) {
-	link.click();
-}
-
-function accountForFirefox(click) { // wrapper function
-	let link = arguments[1];
-	document.body.appendChild(link);
-	click(link);
-	document.body.removeChild(link);
-}
