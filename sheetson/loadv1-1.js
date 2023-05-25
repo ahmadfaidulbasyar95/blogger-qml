@@ -1,3 +1,4 @@
+							event.preventDefault();
 (function() {
 	window.addEventListener('load', function() { 
 		var __urlp          = new URLSearchParams(window.location.search); 
@@ -21,10 +22,14 @@
 						var page_w      = page_mw-page_p*2;
 						var page_o      = orientation == 'P' ? 'portrait' : 'landscape';
 						out.out.qrcode  = '<span id="__sheetson_qrcode"></span>';
+						page_mh         = __sheetson_load.data('height') ?? page_mh;
 						$.each(out.out, function(index, val) {
 							__sheetson_load_ = __sheetson_load_.replace(new RegExp(`\\[${index}\\]`, 'g'),val);
 						});
-						__sheetson_load_ = '<style type="text/css"> @page {size: '+page_size+' '+page_o+'; margin: 0cm;} body {margin:0px;width: '+page_mw+'mm;} p {margin: 0px;line-height: 1.5em;} td {line-height: 1.5em;vertical-align: top;}</style><div style="width: '+page_w+'mm; padding: '+page_p+'mm; ">'+__sheetson_load_+'</div>';
+						__sheetson_load_.replace(/(https:\/\/blogger\.googleusercontent\.com\/img.*?)"/gm, function (match, capture) { 
+							return 'https://testing-faid.000webhostapp.com?url='+encodeURIComponent(capture);
+						}); 
+						__sheetson_load_ = '<style type="text/css"> @page {size: '+page_size+' '+page_o+'; margin: 0cm;} body {margin:0px;width: '+page_mw+'mm;height: '+page_mh+'mm;} p {margin: 0px;line-height: 1.5em;} td {line-height: 1.5em;vertical-align: top;}</style><div style="width: '+page_w+'mm; padding: '+page_p+'mm; ">'+__sheetson_load_+'</div>';
 						__sheetson_load.html('<div style="margin-bottom:5px;"><button id="__sheetson_print" type="button">&#128424 Print</button><button id="__sheetson_dl_img" type="button">&#128247 Download</button></div><style type="text/css"> #__sheetson_load {max-width: '+page_mw+'mm; margin: 0px 5px 50px 5px;} #__sheetson_print, #__sheetson_dl_img {margin-right: 4px;font-size: x-large; padding: 5px 10px; background-color: white; border: 1px solid #bdbdbd;}#__sheetson_print:hover {background-color: #e7e6e6;}</style><iframe id="__sheetson_iframe" style="border:0px;width:100%;height:'+(page_mh+5)+'mm;box-shadow: rgb(0 0 0 / 35%) 0px 0px 4px;"></iframe>');
 						var iframe = document.getElementById('__sheetson_iframe');
 						iframe     = iframe.contentWindow || ( iframe.contentDocument.document || iframe.contentDocument);
