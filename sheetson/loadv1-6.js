@@ -57,11 +57,15 @@
 						__sheetson_dl_img.on('click', function(event) {
 							event.preventDefault();
 							__sheetson_dl_img.html(__sheetson_dl_img_+' <i class="fa fa-spin fa-spinner"></i>').attr('disabled','disabled');
+							iframe.document.body.style.width  = (page_mw + 4) + 'mm';
+							iframe.document.body.style.height = (page_mh + 4) + 'mm';
 							modernScreenshot.domToPng(iframe.document.body, {scale:2}).then(function (dataUrl) {
 								const link = document.createElement('a');
 								link.download = document.title+'.png';
 								link.href = dataUrl;
 								link.click();
+								iframe.document.body.style.width  = '';
+								iframe.document.body.style.height = '';
 								__sheetson_dl_img.html(__sheetson_dl_img_).removeAttr('disabled');
 							});
 						});
