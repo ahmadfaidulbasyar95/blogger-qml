@@ -55,7 +55,7 @@ const toDataURL = url => fetch(url)
 						$(iframe.document.body).find('[data-img64]').each(function(el) {
 							var el = $(this);
 							toDataURL('https://testing-faid.000webhostapp.com?url='+encodeURIComponent(el.data('img64'))).then(dataUrl => {
-								el.attr('src', dataUrl);
+								el.attr('src', dataUrl).data('img64',null);
 							});
 						});
 						$('#__sheetson_print').on('click', function(event) {
