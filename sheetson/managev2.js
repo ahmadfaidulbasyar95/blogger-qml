@@ -12,7 +12,7 @@
 						__sheetson_sheets[i].i = i;
 						html += '<option value="'+i+'">'+__sheetson_sheets[i].title+'</option>';
 					}
-					html += '</select></div><div><table><thead id="__sheetson_head"></thead><tbody id="__sheetson_body"></tbody></table></div><div><td><button type="button" id="__sheetson_more" style="display:none;">Load More</button></td></div></form>';
+					html += '</select></div><div><table class="table table-striped table-bordered"><thead id="__sheetson_head"></thead><tbody id="__sheetson_body"></tbody></table></div><div><td><button type="button" id="__sheetson_more" style="display:none;">Load More</button></td></div></form>';
 					__sheetson_manage.html(html);
 					var __sheetson_head  = $('#__sheetson_head');
 					var __sheetson_body  = $('#__sheetson_body');
