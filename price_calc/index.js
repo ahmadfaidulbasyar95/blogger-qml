@@ -34,11 +34,11 @@ window.__price_list = {
 		]
 	},
 	'charge' : {
-		'hlm_min' : [200,200,250,250],
-		'price' : [2000,4000,4000,4000]
+		'hlm_min' : [350,350,350,350],
+		'price' : [2000,3000,4000,4000]
 	},
 	'size' : ['A6','A5','A4','B5'],
-	'label' : ['Paket Layanan','Ukuran Buku','Jenis Kertas','Finishing','Jumlah Halaman','Jumlah Cetak','Buku','Total Bayar','Hasil Perhitungan','Daftar Harga','Diskon','Binding >','Lengkapi formulir diatas !','Keuntungan','Pemasukan','Pengeluaran','Bagikan Hasil Perhitungan','URL Hasil Perhitungan Berhasil Disalin !'],
+	'label' : ['Paket Layanan','Ukuran Buku','Jenis Kertas','Finishing','Jumlah Halaman','Jumlah Cetak','Buku','Total Bayar','Hasil Perhitungan','Daftar Harga','Diskon','Binding >','Lengkapi formulir diatas !','Keuntungan','Pemasukan','Pengeluaran','Bagikan Hasil Perhitungan','URL Hasil Perhitungan Berhasil Disalin !','Tabel Harga'],
 	'channel' : [
 		{
 			'name' : 'Oase',
@@ -110,11 +110,11 @@ $(document).ready(function(){
 		});
 		__price_form += '</select></td></tr>';
 
-		var __price_calc_data = '<br><p><b>'+__price_list.label[9]+'</b></p><br><div><table><tr><td colspan="2" style="text-align:center;"><b>'+__price_list.label[0]+'</b></td></tr>';
+		var __price_calc_data = '<br><p><b>'+__price_list.label[9]+'</b></p><br><div><table class="table-hover"><tr><td colspan="2" style="text-align:center;"><b>'+__price_list.label[0]+'</b></td></tr>';
 		$.each(__price_list.paket.title, function(index, val) {
 			__price_calc_data += '<tr><td>'+val+'</td><td>Rp'+__price_list.paket.price[index].toLocaleString()+'.00</td></tr>';
 		});
-		__price_calc_data += '</table></div><br><div><table><tr><td><b>'+__price_list.label[2]+'</b></td>';
+		__price_calc_data += '</table></div><br><div><table class="table-hover"><tr><td><b>'+__price_list.label[2]+'</b></td>';
 		$.each(__price_list.size, function(index, val) {
 			__price_calc_data += '<td style="text-align:center;"><b>'+val+'</b></td>';
 		});
@@ -126,7 +126,7 @@ $(document).ready(function(){
 			});
 			__price_calc_data += '</tr>';
 		});
-		__price_calc_data += '</table></div><br><div><table><tr><td><b>'+__price_list.label[3]+'</b></td>';
+		__price_calc_data += '</table></div><br><div><table class="table-hover"><tr><td><b>'+__price_list.label[3]+'</b></td>';
 		$.each(__price_list.size, function(index, val) {
 			__price_calc_data += '<td style="text-align:center;"><b>'+val+'</b></td>';
 		});
@@ -146,11 +146,11 @@ $(document).ready(function(){
 		$.each(__price_list.charge.price, function(index, val) {
 			__price_calc_data += '<td>Rp'+val.toLocaleString()+'.00</td>';
 		});
-		__price_calc_data += '</tr></table></div><br><div><table><tr><td colspan="2" style="text-align:center;"><b>'+__price_list.label[10]+' '+__price_list.label[0]+' ('+__price_list.paket_disc.eks_min+' eks)</b></td></tr>';
+		__price_calc_data += '</tr></table></div><br><div><table class="table-hover"><tr><td colspan="2" style="text-align:center;"><b>'+__price_list.label[10]+' '+__price_list.label[0]+' ('+__price_list.paket_disc.eks_min+' eks)</b></td></tr>';
 		$.each(__price_list.paket_disc.price, function(index, val) {
 			__price_calc_data += '<tr><td>'+__price_list.paket.title[index]+'</td><td>Rp'+val.toLocaleString()+'.00</td></tr>';
 		});
-		__price_calc_data += '</table></div><br><div><table><tr><td><b>'+__price_list.label[10]+' '+__price_list.label[6]+'</b></td>';
+		__price_calc_data += '</table></div><br><div><table class="table-hover"><tr><td><b>'+__price_list.label[10]+' '+__price_list.label[6]+'</b></td>';
 		$.each(__price_list.size, function(index, val) {
 			__price_calc_data += '<td style="text-align:center;"><b>'+val+'</b></td>';
 		});
@@ -162,7 +162,25 @@ $(document).ready(function(){
 			});
 			__price_calc_data += '</tr>';
 		});
-		__price_calc_data += '</table></div>';
+		__price_calc_data += '</table></div><br><p><b>'+__price_list.label[18]+' ('+__price_list.paper.title[0]+' '+__price_list.finishing.title[0]+')</b></p>';
+		$.each(__price_list.size, function(index, val) {
+			__price_calc_data += '<div><table class="table-hover"><tr><td><b>'+val+'</b></td><td><b>1 eks</b></td>';
+			$.each(__price_list.book_disc.eks_min, function(index2, val2) {
+				__price_calc_data += '<td><b>'+val2+' eks</b></td>';
+			});
+			__price_calc_data += '</tr>';
+			for (var i = 60; i < 310; i+=10) {
+				var j = i*__price_list.paper.price[0][index]+__price_list.finishing.price[0][index];
+				__price_calc_data += '<tr><td>'+i+' hlm</td><td>'+j.toLocaleString()+'</td>';
+				$.each(__price_list.book_disc.eks_min, function(index2, val2) {
+					var k = j - __price_list.book_disc.price[index][index2];
+					__price_calc_data += '<td>'+k.toLocaleString()+'</td>';
+				});
+				__price_calc_data += '</tr>';
+			}
+			__price_calc_data += '</table></div><br>';
+		});
+
 
 		if (__price_admin_) {
 			for(var i = 0, length1 = __price_list.channel.length; i < length1; i++){
