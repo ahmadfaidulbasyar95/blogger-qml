@@ -27,7 +27,7 @@
 }
 #__price_calc_data table,
 #__price_calc_result table{
-	min-width: 550px;
+	min-width: 260px;
 	border: 1px solid;
 }
 #__price_calc_data td ,
@@ -35,6 +35,7 @@
 	padding: 5px;
 	border: 1px solid black;
 	text-align: left;
+	white-space: nowrap;
 }
 #__price_calc_result .fa-share {
 	border:  1px solid;
