@@ -1,12 +1,12 @@
 window.__price_admin = 'qwerty';
 window.__price_list = {
 	'paket' : {
-		'title' : ['ISBN','ISBN + HAKI','QRCBN','QRCBN + HAKI','Cetak Ulang'],
-		'price' : [400000,850000,150000,600000,0]
+		'title' : ['ISBN','ISBN + HAKI','ISBN + Parafrase','ISBN + HAKI + Parafrase','QRCBN','QRCBN + HAKI','Cetak Ulang'],
+		'price' : [400000,850000,500000,950000,150000,600000,0]
 	},
 	'paket_disc' : {
 		'eks_min' : 50,
-		'price' : [200000,200000,150000,150000,0]
+		'price' : [200000,200000,200000,200000,150000,150000,0]
 	},
 	'book_disc' : {
 		'eks_min' : [15,35,50,65,80,100,150,200],
@@ -38,7 +38,7 @@ window.__price_list = {
 		'price' : [2000,3000,5000,4000]
 	},
 	'size' : ['A6','A5','A4','B5'],
-	'label' : ['Paket Layanan','Ukuran Buku','Jenis Kertas','Finishing','Jumlah Halaman','Jumlah Cetak','Buku','Total Bayar','Hasil Perhitungan','Daftar Harga','Diskon','Binding >','Lengkapi formulir diatas !','Keuntungan','Pemasukan','Pengeluaran','Bagikan Hasil Perhitungan','URL Hasil Perhitungan Berhasil Disalin !','Tabel Harga'],
+	'label' : ['Paket Layanan','Ukuran Buku','Jenis Kertas','Finishing','Jumlah Halaman','Jumlah Cetak','Buku','Total Bayar','Hasil Perhitungan','Daftar Harga','Diskon','Binding >','Lengkapi formulir diatas !','Keuntungan','Pemasukan','Pengeluaran','Bagikan Hasil Perhitungan','Hasil Perhitungan Berhasil Disalin !','Tabel Harga'],
 	'channel' : [
 		{
 			'name' : 'Oase',
@@ -274,7 +274,8 @@ $(document).ready(function(){
 					}
 				}
 
-				__p_result += '<tr> <td><b>'+__price_list.label[7]+'</b></td> <td><b>Rp'+__p_total.toLocaleString()+'.00</b></td> </tr> </table></div><br><p><a class="fa fa-share" href="'+window.location.origin+window.location.pathname+'?v='+__v_paket+'|'+__v_size+'|'+__v_paper+'|'+__v_finishing+'|'+__v_hlm+'|'+__v_eks+'" onclick="copyTextToClipboard(this.href,\''+__price_list.label[17]+'\');return false;"> '+__price_list.label[16]+'</a></p>';
+				__p_result += '<tr> <td><b>'+__price_list.label[7]+'</b></td> <td><b>Rp'+__p_total.toLocaleString()+'.00</b></td> </tr> </table></div><br><p><a class="fa fa-share" href="'+window.location.origin+window.location.pathname+'?v='+__v_paket+'|'+__v_size+'|'+__v_paper+'|'+__v_finishing+'|'+__v_hlm+'|'+__v_eks+'" onclick="copyTextToClipboard(window.__p_result_cb+this.href,\''+__price_list.label[17]+'\');return false;"> '+__price_list.label[16]+'</a></p>';
+				window.__p_result_cb = __p_result.replace(/<\/td>\s?<\/tr>\s?<tr>\s?<td>/g,"\n\n").replace(/<tr>\s?<td>|<\/td>\s?<\/tr>|<b>|<\/b>|^.*?<table>\s?|<\/table>.*?$/g,"").replace(/\sclass="__price_disc">/g,">-").replace(/<\/td>\s?<td>|<br>/g,"\n")+"\n\n";
 
 				if (__price_admin_) {
 					for (var i = 0; i < __price_list.channel.length; i++) {
