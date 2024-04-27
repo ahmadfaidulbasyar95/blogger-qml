@@ -260,10 +260,18 @@ $(document).ready(function(){
 				var __p_paket     = __price_list.paket.price[__v_paket];
 				var __p_paper     = __price_list.paper.price[__v_paper][__v_size];
 				var __p_finishing = __price_list.finishing.price[__v_finishing][__v_size];
-				var __p_book      = __v_hlm*__p_paper+__p_finishing;
+				var __p_paper_ttl = __v_hlm*__p_paper;
+				var __p_book      = __p_paper_ttl+__p_finishing;
+				var __p_add_label = '';
+				if (__v_hlm_add > 0) {
+					var __p_paper_add     = __price_list.paper.price[__v_paper_add][__v_size];
+					var __p_paper_add_ttl = __v_hlm_add*__p_paper_add;
+					__p_book     += __p_paper_add_ttl;
+					__p_add_label = '<br>'+__price_list.label[19]+' '+__price_list.paper.title[__v_paper_add]+' Rp'+__p_paper_add.toLocaleString()+'.00 * '+__v_hlm_add+' hlm = Rp'+__p_paper_add_ttl.toLocaleString()+'.00';
+				}
 				var __p_book_ttl  = __p_book*__v_eks;
 				var __p_total     = __p_book_ttl+__p_paket;
-				var __p_result    = '<br><p><b>'+__price_list.label[8]+'</b></p><br><div><table> <tr> <td>'+__price_list.label[0]+' '+__price_list.paket.title[__v_paket]+'</td> <td>Rp'+__p_paket.toLocaleString()+'.00</td> </tr> <tr> <td>'+__price_list.label[6]+' '+__price_list.size[__v_size]+', '+__price_list.finishing.title[__v_finishing]+', '+__price_list.paper.title[__v_paper]+', '+__v_hlm+' hlm, '+__v_eks+' eks<br>('+__v_hlm+' hlm * Rp'+__p_paper.toLocaleString()+'.00 + Rp'+__p_finishing.toLocaleString()+'.00) * '+__v_eks+' eks<br>Rp'+__p_book.toLocaleString()+'.00 * '+__v_eks+' eks</td> <td>Rp'+__p_book_ttl.toLocaleString()+'.00</td> </tr>';
+				var __p_result    = '<br><p><b>'+__price_list.label[8]+'</b></p><br><div><table> <tr> <td>'+__price_list.label[0]+' '+__price_list.paket.title[__v_paket]+'</td> <td>Rp'+__p_paket.toLocaleString()+'.00</td> </tr> <tr> <td>'+__price_list.label[6]+' '+__price_list.size[__v_size]+' '+__price_list.finishing.title[__v_finishing]+' = Rp'+__p_finishing.toLocaleString()+'.00<br>'+__price_list.paper.title[__v_paper]+' Rp'+__p_paper.toLocaleString()+'.00 * '+__v_hlm+' hlm = Rp'+__p_paper_ttl.toLocaleString()+'.00'+__p_add_label+'<br>Rp'+__p_book.toLocaleString()+'.00 * '+__v_eks+' eks</td> <td>Rp'+__p_book_ttl.toLocaleString()+'.00</td> </tr>';
 
 				if (__v_hlm >= __price_list.charge.hlm_min[__v_size]) {
 					var __p_charge = __price_list.charge.price[__v_size];
