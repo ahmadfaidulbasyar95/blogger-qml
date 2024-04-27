@@ -240,6 +240,8 @@ $(document).ready(function(){
 		var __s_paper           = $('#__s_paper');
 		var __s_finishing       = $('#__s_finishing');
 		var __s_hlm             = $('#__s_hlm');
+		var __s_paper_add       = $('#__s_paper_add');
+		var __s_hlm_add         = $('#__s_hlm_add');
 		var __s_eks             = $('#__s_eks');
 		var __price_calc_result = $('#__price_calc_result');
 
@@ -253,6 +255,8 @@ $(document).ready(function(){
 				var __v_size      = __s_size.val();
 				var __v_paper     = __s_paper.val();
 				var __v_finishing = __s_finishing.val();
+				var __v_paper_add = __s_paper_add.val();
+				var __v_hlm_add   = __s_hlm_add.val();
 				var __p_paket     = __price_list.paket.price[__v_paket];
 				var __p_paper     = __price_list.paper.price[__v_paper][__v_size];
 				var __p_finishing = __price_list.finishing.price[__v_finishing][__v_size];
@@ -286,7 +290,7 @@ $(document).ready(function(){
 					}
 				}
 
-				__p_result += '<tr> <td><b>'+__price_list.label[7]+'</b></td> <td><b>Rp'+__p_total.toLocaleString()+'.00</b></td> </tr> </table></div><br><p><a class="fa fa-share" href="'+window.location.origin+window.location.pathname+'?v='+__v_paket+'|'+__v_size+'|'+__v_paper+'|'+__v_finishing+'|'+__v_hlm+'|'+__v_eks+'" onclick="copyTextToClipboard(window.__p_result_cb+this.href,\''+__price_list.label[17]+'\');return false;"> '+__price_list.label[16]+'</a></p>';
+				__p_result += '<tr> <td><b>'+__price_list.label[7]+'</b></td> <td><b>Rp'+__p_total.toLocaleString()+'.00</b></td> </tr> </table></div><br><p><a class="fa fa-share" href="'+window.location.origin+window.location.pathname+'?v='+__v_paket+'|'+__v_size+'|'+__v_paper+'|'+__v_finishing+'|'+__v_hlm+'|'+__v_eks+'|'+__v_paper_add+'|'+__v_hlm_add+'" onclick="copyTextToClipboard(window.__p_result_cb+this.href,\''+__price_list.label[17]+'\');return false;"> '+__price_list.label[16]+'</a></p>';
 				window.__p_result_cb = __p_result.replace(/<\/td>\s?<\/tr>\s?<tr>\s?<td>/g,"\n\n").replace(/<tr>\s?<td>|<\/td>\s?<\/tr>|<b>|<\/b>|^.*?<table>\s?|<\/table>.*?$/g,"").replace(/\sclass="__price_disc">/g,">-").replace(/<\/td>\s?<td>|<br>/g,"\n")+"\n\n";
 
 				if (__price_admin_) {
@@ -325,10 +329,16 @@ $(document).ready(function(){
 		__s_paper.on('change', function(event) {
 			__price_calc_f();
 		});
+		__s_paper_add.on('change', function(event) {
+			__price_calc_f();
+		});
 		__s_finishing.on('change', function(event) {
 			__price_calc_f();
 		});
 		__s_hlm.on('change keyup', function(event) {
+			__price_calc_f();
+		});
+		__s_hlm_add.on('change keyup', function(event) {
 			__price_calc_f();
 		});
 		__s_eks.on('change keyup', function(event) {
@@ -338,13 +348,15 @@ $(document).ready(function(){
 		var __price_load = __urlp.get('v');
 		if (__price_load) {
 			__price_load = __price_load.split('|');
-			if (__price_load.length==6) {
+			if (__price_load.length>=6) {
 				__s_paket.val(__price_load[0]);
 				__s_size.val(__price_load[1]);
 				__s_paper.val(__price_load[2]);
 				__s_finishing.val(__price_load[3]);
 				__s_hlm.val(__price_load[4]);
 				__s_eks.val(__price_load[5]);
+				__s_paper_add.val(__price_load[6]);
+				__s_hlm_add.val(__price_load[7]);
 				$('html, body').animate({
 					scrollTop: $('#__price_calc').offset().top - 150
 				}, 2000);
