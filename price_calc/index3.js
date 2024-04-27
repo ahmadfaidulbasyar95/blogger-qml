@@ -38,7 +38,7 @@ window.__price_list = {
 		'price' : [2000,3000,5000,4000]
 	},
 	'size' : ['A6','A5','A4','B5'],
-	'label' : ['Paket Layanan','Ukuran Buku','Jenis Kertas','Finishing','Jumlah Halaman','Jumlah Cetak','Buku','Total Bayar','Hasil Perhitungan','Daftar Harga','Diskon','Binding >','Lengkapi formulir diatas !','Keuntungan','Pemasukan','Pengeluaran','Bagikan Hasil Perhitungan','Hasil Perhitungan Berhasil Disalin !','Tabel Harga'],
+	'label' : ['Paket Layanan','Ukuran Buku','Jenis Kertas','Finishing','Jumlah Halaman','Jumlah Cetak','Buku','Total Bayar','Hasil Perhitungan','Daftar Harga','Diskon','Binding >','Lengkapi formulir diatas !','Keuntungan','Pemasukan','Pengeluaran','Bagikan Hasil Perhitungan','Hasil Perhitungan Berhasil Disalin !','Tabel Harga','Sisipan'],
 	'channel' : [
 		{
 			'name' : 'Oase',
@@ -109,6 +109,18 @@ $(document).ready(function(){
 			__price_form += '<option value="'+index+'">'+val+'</option>';
 		});
 		__price_form += '</select></td></tr>';
+
+		__price_form += '<tr><td>'+__price_list.label[4]+'</td><td><input id="__s_hlm" type="number" class="__price_input" placeholder="40 - 1000" min="40" max="1000" required="required"></td></tr>';
+
+		__price_form += '<tr><td>'+__price_list.label[2]+' '+__price_list.label[19]+'</td><td><select id="__s_paper_add" class="__price_input" required="required">';
+		$.each(__price_list.paper.title, function(index, val) {
+			__price_form += '<option value="'+index+'">'+val+'</option>';
+		});
+		__price_form += '</select></td></tr>';
+
+		__price_form += '<tr><td>'+__price_list.label[4]+' '+__price_list.label[19]+'</td><td><input id="__s_hlm_add" type="number" class="__price_input" placeholder="0 - 1000" min="0" max="1000" value="0" required="required"></td></tr>';
+
+		__price_form += '<tr><td>'+__price_list.label[5]+'</td><td><input id="__s_eks" type="number" class="__price_input" placeholder="1 - 1000" min="1" max="1000" required="required"></td></tr>';
 
 		var __price_calc_data = '<br><p><b>'+__price_list.label[9]+'</b></p><br><div><table class="table-hover"><tr><td colspan="2" style="text-align:center;"><b>'+__price_list.label[0]+'</b></td></tr>';
 		$.each(__price_list.paket.title, function(index, val) {
@@ -220,7 +232,7 @@ $(document).ready(function(){
 			}
 		}
 
-		__price_form = '<form action="" method="POST" role="form" onsubmit="return false;"><table>'+__price_form+'<tr><td>'+__price_list.label[4]+'</td><td><input id="__s_hlm" type="number" class="__price_input" placeholder="40 - 1000" min="40" max="1000" required="required"></td></tr><tr><td>'+__price_list.label[5]+'</td><td><input id="__s_eks" type="number" class="__price_input" placeholder="1 - 1000" min="1" max="1000" required="required"></td></tr></table></form><div id="__price_calc_result"></div><div id="__price_calc_data">'+__price_calc_data+'</div>';
+		__price_form = '<form action="" method="POST" role="form" onsubmit="return false;"><table>'+__price_form+'</table></form><div id="__price_calc_result"></div><div id="__price_calc_data">'+__price_calc_data+'</div>';
 		__price_calc.html(__price_form);
 
 		var __s_paket           = $('#__s_paket');
