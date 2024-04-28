@@ -296,6 +296,7 @@ $(document).ready(function(){
 					var __v_voucher_n = __price_list.voucher[__v_voucher]*1000;
 					__p_result += '<tr><td>'+__price_list.label[20]+' Rp'+__v_voucher_n.toLocaleString()+'.00</td>';
 					if (__v_voucher_m < __v_voucher_n) __v_voucher_n = __v_voucher_m;
+					if (__v_eks >= __price_list.paket_disc.eks_min) __v_voucher_n = 0;
 					__p_result += '<td class="__price_disc">Rp'+__v_voucher_n.toLocaleString()+'.00</td></tr>';
 					__p_total -= __v_voucher_n;
 				}
