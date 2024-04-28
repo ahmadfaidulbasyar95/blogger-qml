@@ -38,7 +38,8 @@ window.__price_list = {
 		'price' : [2000,3000,5000,4000]
 	},
 	'size' : ['A6','A5','A4','B5'],
-	'label' : ['Paket Layanan','Ukuran Buku','Jenis Kertas','Finishing','Jumlah Halaman','Jumlah Cetak','Buku','Total Bayar','Hasil Perhitungan','Daftar Harga','Diskon','Binding >','Lengkapi formulir diatas !','Keuntungan','Pemasukan','Pengeluaran','Bagikan Hasil Perhitungan','Hasil Perhitungan Berhasil Disalin !','Tabel Harga','Sisipan'],
+	'label' : ['Paket Layanan','Ukuran Buku','Jenis Kertas','Finishing','Jumlah Halaman','Jumlah Cetak','Buku','Total Bayar','Hasil Perhitungan','Daftar Harga','Diskon','Binding >','Lengkapi formulir diatas !','Keuntungan','Pemasukan','Pengeluaran','Bagikan Hasil Perhitungan','Hasil Perhitungan Berhasil Disalin !','Tabel Harga','Sisipan','Voucher Terbit'],
+	'voucher' : [0,50,100,150,200,250,300],
 	'channel' : [
 		{
 			'name' : 'Oase',
@@ -118,9 +119,15 @@ $(document).ready(function(){
 		});
 		__price_form += '</select></td></tr>';
 
-		__price_form += '<tr><td>'+__price_list.label[4]+' '+__price_list.label[19]+'</td><td><input id="__s_hlm_add" type="number" class="__price_input" placeholder="0 - 1000" min="0" max="1000" value="0" required="required"></td></tr>';
+		__price_form += '<tr><td>'+__price_list.label[4]+' '+__price_list.label[19]+'</td><td><input id="__s_hlm_add" type="number" class="__price_input" placeholder="0 - 1000" min="0" max="1000" required="required"></td></tr>';
 
 		__price_form += '<tr><td>'+__price_list.label[5]+'</td><td><input id="__s_eks" type="number" class="__price_input" placeholder="1 - 1000" min="1" max="1000" required="required"></td></tr>';
+
+		__price_form += '<tr><td>'+__price_list.label[20]+'</td><td><select id="__s_voucher" class="__price_input" required="required">';
+		$.each(__price_list.voucher, function(index, val) {
+			__price_form += '<option value="'+index+'">Rp'+(val*1000).toLocaleString()+'.00</option>';
+		});
+		__price_form += '</select></td></tr>';
 
 		var __price_calc_data = '<br><p><b>'+__price_list.label[9]+'</b></p><br><div><table class="table-hover"><tr><td colspan="2" style="text-align:center;"><b>'+__price_list.label[0]+'</b></td></tr>';
 		$.each(__price_list.paket.title, function(index, val) {
@@ -243,9 +250,11 @@ $(document).ready(function(){
 		var __s_paper_add       = $('#__s_paper_add');
 		var __s_hlm_add         = $('#__s_hlm_add');
 		var __s_eks             = $('#__s_eks');
+		var __s_voucher         = $('#__s_voucher');
 		var __price_calc_result = $('#__price_calc_result');
 
 		__s_size.val('1');
+		__s_paper_add.val('2');
 
 		function __price_calc_f() {
 			var __v_hlm = __s_hlm.val();
@@ -257,6 +266,7 @@ $(document).ready(function(){
 				var __v_finishing = __s_finishing.val();
 				var __v_paper_add = __s_paper_add.val();
 				var __v_hlm_add   = __s_hlm_add.val();
+				var __v_voucher   = __s_voucher.val();
 				var __p_paket     = __price_list.paket.price[__v_paket];
 				var __p_paper     = __price_list.paper.price[__v_paper][__v_size];
 				var __p_finishing = __price_list.finishing.price[__v_finishing][__v_size];
@@ -298,7 +308,7 @@ $(document).ready(function(){
 					}
 				}
 
-				__p_result += '<tr> <td><b>'+__price_list.label[7]+'</b></td> <td><b>Rp'+__p_total.toLocaleString()+'.00</b></td> </tr> </table></div><br><p><a class="fa fa-share" href="'+window.location.origin+window.location.pathname+'?v='+__v_paket+'|'+__v_size+'|'+__v_paper+'|'+__v_finishing+'|'+__v_hlm+'|'+__v_eks+'|'+__v_paper_add+'|'+__v_hlm_add+'" onclick="copyTextToClipboard(window.__p_result_cb+this.href,\''+__price_list.label[17]+'\');return false;"> '+__price_list.label[16]+'</a></p>';
+				__p_result += '<tr> <td><b>'+__price_list.label[7]+'</b></td> <td><b>Rp'+__p_total.toLocaleString()+'.00</b></td> </tr> </table></div><br><p><a class="fa fa-share" href="'+window.location.origin+window.location.pathname+'?v='+__v_paket+'|'+__v_size+'|'+__v_paper+'|'+__v_finishing+'|'+__v_hlm+'|'+__v_eks+'|'+__v_paper_add+'|'+__v_hlm_add+'|'+__v_voucher+'" onclick="copyTextToClipboard(window.__p_result_cb+this.href,\''+__price_list.label[17]+'\');return false;"> '+__price_list.label[16]+'</a></p>';
 				window.__p_result_cb = __p_result.replace(/<\/td>\s?<\/tr>\s?<tr>\s?<td>/g,"\n\n").replace(/<tr>\s?<td>|<\/td>\s?<\/tr>|<b>|<\/b>|^.*?<table>\s?|<\/table>.*?$/g,"").replace(/\sclass="__price_disc">/g,">-").replace(/<\/td>\s?<td>|<br>/g,"\n")+"\n\n";
 
 				if (__price_admin_) {
@@ -352,6 +362,9 @@ $(document).ready(function(){
 		__s_eks.on('change keyup', function(event) {
 			__price_calc_f();
 		});
+		__s_voucher.on('change keyup', function(event) {
+			__price_calc_f();
+		});
 
 		var __price_load = __urlp.get('v');
 		if (__price_load) {
@@ -365,6 +378,7 @@ $(document).ready(function(){
 				__s_eks.val(__price_load[5]);
 				__s_paper_add.val(__price_load[6]);
 				__s_hlm_add.val(__price_load[7]);
+				__s_voucher.val(__price_load[8]);
 				$('html, body').animate({
 					scrollTop: $('#__price_calc').offset().top - 150
 				}, 2000);
