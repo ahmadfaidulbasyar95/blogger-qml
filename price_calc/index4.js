@@ -317,7 +317,9 @@ $(document).ready(function(){
 					}
 				}
 
-				__p_result += '<tr> <td><b>'+__price_list.label[7]+'</b></td> <td><b>Rp'+__p_total.toLocaleString()+'.00</b></td> </tr> </table></div><br><p><a class="fa fa-share" href="'+window.location.origin+window.location.pathname+'?v='+__v_paket+'|'+__v_size+'|'+__v_paper+'|'+__v_finishing+'|'+__v_hlm+'|'+__v_eks+'|'+__v_paper_add+'|'+__v_hlm_add+'|'+__v_voucher+'" onclick="copyTextToClipboard(window.__p_result_cb+this.href,\''+__price_list.label[17]+'\');return false;"> '+__price_list.label[16]+'</a></p>';
+				var __p_result_url = window.location.origin+window.location.pathname+'?v='+__v_paket+'|'+__v_size+'|'+__v_paper+'|'+__v_finishing+'|'+__v_hlm+'|'+__v_eks+'|'+__v_paper_add+'|'+__v_hlm_add+'|'+__v_voucher;
+				window.history.replaceState({},document.title,__p_result_url);
+				__p_result += '<tr> <td><b>'+__price_list.label[7]+'</b></td> <td><b>Rp'+__p_total.toLocaleString()+'.00</b></td> </tr> </table></div><br><p><a class="fa fa-share" href="'+__p_result_url+'" onclick="copyTextToClipboard(window.__p_result_cb+this.href,\''+__price_list.label[17]+'\');return false;"> '+__price_list.label[16]+'</a></p>';
 				window.__p_result_cb = __p_result.replace(/<\/td>\s?<\/tr>\s?<tr>\s?<td>/g,"\n\n").replace(/<tr>\s?<td>|<\/td>\s?<\/tr>|<b>|<\/b>|^.*?<table>\s?|<\/table>.*?$/g,"").replace(/\sclass="__price_disc">/g,">-").replace(/<\/td>\s?<td>|<br>/g,"\n")+"\n\n";
 
 				if (__price_admin_) {
