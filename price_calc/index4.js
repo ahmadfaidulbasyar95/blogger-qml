@@ -6,7 +6,7 @@ window.__price_list = {
 	},
 	'paket_disc' : {
 		'eks_min' : 50,
-		'price' : [200000,200000,200000,200000,150000,150000,0]
+		'price' : [300000,300000,300000,300000,150000,150000,0]
 	},
 	'book_disc' : {
 		'eks_min' : [15,35,50,65,80,100,150,200],
@@ -289,6 +289,15 @@ $(document).ready(function(){
 					__p_charge = __p_charge * __v_eks;
 					__p_result += '<td>Rp'+__p_charge.toLocaleString()+'.00</td></tr>';
 					__p_total += __p_charge;
+				}
+
+				if (__v_voucher > 0) {
+					var __v_voucher_m = __price_list.paket_disc.price[__v_paket];
+					var __v_voucher_n = __price_list.voucher[__v_voucher]*1000;
+					__p_result += '<tr><td>'+__price_list.label[20]+' Rp'+__v_voucher_n.toLocaleString()+'.00</td>';
+					if (__v_voucher_m < __v_voucher_n) __v_voucher_n = __v_voucher_m;
+					__p_result += '<td class="__price_disc">Rp'+__v_voucher_n.toLocaleString()+'.00</td></tr>';
+					__p_total -= __v_voucher_n;
 				}
 				
 				if (__v_eks >= __price_list.paket_disc.eks_min) {
