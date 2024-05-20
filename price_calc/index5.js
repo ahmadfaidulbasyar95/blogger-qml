@@ -269,6 +269,12 @@ $(document).ready(function(){
 				var __v_paper_add = __s_paper_add.val();
 				var __v_hlm_add   = __s_hlm_add.val();
 				var __v_voucher   = __s_voucher.val();
+				if (__price_list.paket_eks_min[__v_paket] > __v_eks) {
+					alert(__price_list.label[0]+' '+__price_list.paket.title[__v_paket]+' '+__price_list.label[5]+' Min. '+__price_list.paket_eks_min[__v_paket]+' eks');
+					__s_eks.val(__price_list.paket_eks_min[__v_paket]);
+					__price_calc_f();
+					return false;
+				}
 				var __p_paket     = __price_list.paket.price[__v_paket];
 				var __p_paper     = __price_list.paper.price[__v_paper][__v_size];
 				var __p_finishing = __price_list.finishing.price[__v_finishing][__v_size];
@@ -294,6 +300,12 @@ $(document).ready(function(){
 				}
 
 				if (__v_voucher > 0) {
+					if (__price_list.voucher_eks_min > __v_eks) {
+						alert(__price_list.label[20]+' '+__price_list.label[5]+' Min. '+__price_list.voucher_eks_min+' eks');
+						__s_eks.val(__price_list.voucher_eks_min);
+						__price_calc_f();
+						return false;
+					}
 					var __v_voucher_m = __price_list.paket_disc.price[__v_paket];
 					var __v_voucher_n = __price_list.voucher[__v_voucher]*1000;
 					__p_result += '<tr><td>'+__price_list.label[20]+' Rp'+__v_voucher_n.toLocaleString()+'.00</td>';
