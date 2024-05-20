@@ -4,6 +4,7 @@ window.__price_list = {
 		'title' : ['ISBN','ISBN + HAKI','ISBN + Parafrase','ISBN + HAKI + Parafrase','QRCBN','QRCBN + HAKI','Cetak Ulang'],
 		'price' : [400000,850000,500000,950000,150000,600000,0]
 	},
+	'paket_eks_min' : [30,30,30,30,1,1,1],
 	'paket_disc' : {
 		'eks_min' : 50,
 		'price' : [300000,300000,300000,300000,150000,150000,0]
@@ -40,6 +41,7 @@ window.__price_list = {
 	'size' : ['A6','A5','A4','B5'],
 	'label' : ['Paket Layanan','Ukuran Buku','Jenis Kertas','Finishing','Jumlah Halaman','Jumlah Cetak','Buku','Total Bayar','Hasil Perhitungan','Daftar Harga','Diskon','Binding >','Lengkapi formulir diatas !','Keuntungan','Pemasukan','Pengeluaran','Bagikan Hasil Perhitungan','Hasil Perhitungan Berhasil Disalin !','Tabel Harga','Sisipan','Voucher Terbit'],
 	'voucher' : [0,50,100,150,200,250,300],
+	'voucher_eks_min' : 10,
 	'channel' : [
 		{
 			'name' : 'Oase',
@@ -123,7 +125,7 @@ $(document).ready(function(){
 
 		__price_form += '<tr><td>'+__price_list.label[5]+'</td><td><input id="__s_eks" type="number" class="__price_input" placeholder="1 - 1000" min="1" max="1000" required="required"></td></tr>';
 
-		__price_form += '<tr><td>'+__price_list.label[20]+'</td><td><select id="__s_voucher" class="__price_input" required="required">';
+		__price_form += '<tr><td>'+__price_list.label[20]+'<br>Min. '+__price_list.voucher_eks_min+' eks</td><td><select id="__s_voucher" class="__price_input" required="required">';
 		$.each(__price_list.voucher, function(index, val) {
 			__price_form += '<option value="'+index+'">Rp'+(val*1000).toLocaleString()+'.00</option>';
 		});
@@ -131,7 +133,7 @@ $(document).ready(function(){
 
 		var __price_calc_data = '<br><p><b>'+__price_list.label[9]+'</b></p><br><div><table class="table-hover"><tr><td colspan="2" style="text-align:center;"><b>'+__price_list.label[0]+'</b></td></tr>';
 		$.each(__price_list.paket.title, function(index, val) {
-			__price_calc_data += '<tr><td>'+val+'</td><td>Rp'+__price_list.paket.price[index].toLocaleString()+'.00</td></tr>';
+			__price_calc_data += '<tr title="Min. '+__price_list.paket_eks_min[index]+' eks"><td>'+val+'</td><td>Rp'+__price_list.paket.price[index].toLocaleString()+'.00</td></tr>';
 		});
 		__price_calc_data += '</table></div><br><div><table class="table-hover"><tr><td><b>'+__price_list.label[2]+'</b></td>';
 		$.each(__price_list.size, function(index, val) {
