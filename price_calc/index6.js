@@ -43,7 +43,7 @@ window.__price_list = {
 	'size' : ['A6','A5','A4','B5'],
 	'sizex' : [10.5,14.8,21.0,17.6],
 	'sizey' : [14.8,21.0,29.7,25.0],
-	'label' : ['Paket Layanan','Ukuran Buku','Jenis Kertas','Finishing','Jumlah Halaman','Jumlah Cetak','Buku','Total Bayar','Hasil Perhitungan','Daftar Harga','Diskon','Binding >','Lengkapi formulir diatas !','Keuntungan','Pemasukan','Pengeluaran','Bagikan Hasil Perhitungan','Hasil Perhitungan Berhasil Disalin !','Tabel Harga','Sisipan','Voucher Terbit'],
+	'label' : ['Paket Layanan','Ukuran Buku','Jenis Kertas','Finishing','Jumlah Halaman','Jumlah Cetak','Buku','Total Bayar','Hasil Perhitungan','Daftar Harga','Diskon','Binding >','Lengkapi formulir diatas !','Keuntungan','Pemasukan','Pengeluaran','Bagikan Hasil Perhitungan','Hasil Perhitungan Berhasil Disalin !','Tabel Harga','Sisipan','Voucher Terbit','Estimasi Berat'],
 	'voucher' : [0,50,100,150,200,250,300],
 	'voucher_eks_min' : 10,
 	'channel' : [
@@ -340,6 +340,21 @@ $(document).ready(function(){
 				window.history.replaceState({},document.title,__p_result_url);
 				__p_result += '<tr> <td><b>'+__price_list.label[7]+'</b></td> <td><b>Rp'+__p_total.toLocaleString()+'.00</b></td> </tr> </table></div><br><p><a class="fa fa-share" href="'+__p_result_url+'" onclick="copyTextToClipboard(window.__p_result_cb+this.href,\''+__price_list.label[17]+'\');return false;"> '+__price_list.label[16]+'</a></p>';
 				window.__p_result_cb = __p_result.replace(/<\/td>\s?<\/tr>\s?<tr>\s?<td>/g,"\n\n").replace(/<tr>\s?<td>|<\/td>\s?<\/tr>|<b>|<\/b>|^.*?<table>\s?|<\/table>.*?$/g,"").replace(/\sclass="__price_disc">/g,">-").replace(/<\/td>\s?<td>|<br>/g,"\n")+"\n\n";
+
+				var __p_weight_h = Math.ceil(__v_hlm/2);
+				var __p_weight_p = __price_list.sizex[__v_size]*__price_list.sizey[__v_size];
+				var __p_weight_s = Math.ceil((__p_weight_p*__price_list.finishing.gsm[__v_finishing]/10000)*2*10)/10;
+				var __p_weight_i = Math.ceil((__p_weight_p*__price_list.paper.gsm[__v_paper]/10000)*__p_weight_h*10)/10;
+				var __p_weight_t = Math.ceil((__p_weight_s+__p_weight_i)*10)/10;
+				__p_result += '<br><div><table><tr><td colspan="2" style="text-align:center;"><b>'+__price_list.label[21]+'</b></td></tr><tr><td>'+__price_list.finishing.title[__v_finishing]+' '+__price_list.finishing.gsm[__v_finishing]+' gsm</td><td>'+__p_weight_s+' gr</td></tr><tr><td>'+__price_list.paper.title[__v_paper]+' '+__price_list.paper.gsm[__v_paper]+' gsm '+__p_weight_h+' lbr</td><td>'+__p_weight_i+' gr</td></tr>';
+				if (__v_hlm_add > 0) {
+					var __p_weight_hh = Math.ceil(__v_hlm_add/2);
+					var __p_weight_ii = Math.ceil((__p_weight_p*__price_list.paper.gsm[__v_paper_add]/10000)*__p_weight_hh*10)/10;
+					__p_result += '<tr><td>'+__price_list.paper.title[__v_paper_add]+' '+__price_list.paper.gsm[__v_paper_add]+' gsm '+__p_weight_hh+' lbr</td><td>'+__p_weight_ii+' gr</td></tr>';
+					__p_weight_t += __p_weight_ii;
+				}
+				var __p_weight_z = Math.ceil((__p_weight_t*__v_eks/1000)*100)/100;
+				__p_result += '<tr><td colspan="2"></td></tr><tr><td>'+__price_list.label[6]+' / eks</td><td>'+__p_weight_t+' gr</td></tr><tr><td><b>'+__price_list.label[6]+' '+__v_eks+' eks</b></td><td><b>'+__p_weight_z+' kg</b></td></tr></table></div><br>';
 
 				if (__price_admin_) {
 					for (var i = 0; i < __price_list.channel.length; i++) {
