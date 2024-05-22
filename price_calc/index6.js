@@ -354,7 +354,7 @@ $(document).ready(function(){
 					__p_weight_t += __p_weight_ii;
 				}
 				var __p_weight_z = Math.ceil((__p_weight_t*__v_eks/1000)*100)/100;
-				__p_result += '<tr><td colspan="2"></td></tr><tr><td>'+__price_list.label[6]+' / eks</td><td>'+__p_weight_t+' gr</td></tr><tr><td><b>'+__price_list.label[6]+' '+__v_eks+' eks</b></td><td><b>'+__p_weight_z+' kg</b></td></tr></table></div><br>';
+				__p_result += '<tr><td colspan="2"></td></tr><tr><td>'+__price_list.label[6]+' 1 eks</td><td>'+__p_weight_t+' gr</td></tr><tr><td><b>'+__price_list.label[6]+' '+__v_eks+' eks</b></td><td><b>'+__p_weight_z+' kg</b></td></tr></table></div><br>';
 
 				if (__price_admin_) {
 					for (var i = 0; i < __price_list.channel.length; i++) {
