@@ -20,6 +20,7 @@ window.__price_list = {
 	},
 	'paper' : {
 		'title' : ['Bookpaper','HVS','HVS Warna','Artpaper Warna'],
+		'gsm'   : [57,70,80,120],
 		'price' : [
 			[60,150,200,190],
 			[70,150,200,190],
@@ -29,6 +30,7 @@ window.__price_list = {
 	},
 	'finishing' : {
 		'title' : ['Soft Cover','Hard Cover'],
+		'gsm'   : [260,1260],
 		'price' : [
 			[7000,15000,19000,17000],
 			[35000,35000,38000,38000]
@@ -39,6 +41,8 @@ window.__price_list = {
 		'price' : [2000,3000,5000,4000]
 	},
 	'size' : ['A6','A5','A4','B5'],
+	'sizex' : [10.5,14.8,21.0,17.6],
+	'sizey' : [14.8,21.0,29.7,25.0],
 	'label' : ['Paket Layanan','Ukuran Buku','Jenis Kertas','Finishing','Jumlah Halaman','Jumlah Cetak','Buku','Total Bayar','Hasil Perhitungan','Daftar Harga','Diskon','Binding >','Lengkapi formulir diatas !','Keuntungan','Pemasukan','Pengeluaran','Bagikan Hasil Perhitungan','Hasil Perhitungan Berhasil Disalin !','Tabel Harga','Sisipan','Voucher Terbit'],
 	'voucher' : [0,50,100,150,200,250,300],
 	'voucher_eks_min' : 10,
