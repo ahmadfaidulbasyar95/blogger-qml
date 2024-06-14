@@ -100,6 +100,9 @@ const gsheets_load = () => {
 window.__sheetson_token = window.__sheetson_token.split('--');
 (function() {
 	window.addEventListener('load', function() { 
+		$('html, body').animate({
+			scrollTop: $('#__sheetson_load').offset().top - 150
+		}, 2000);
 		gapi.load('client', gsheets_load);
 	}, false);
 })();
