@@ -61,7 +61,7 @@ const gsheets_load = () => {
 				}).append(iframe.document.getElementById('__sheetson_qrcode'));
 				$(iframe.document.body).find('[data-img64]').each(function(el) {
 					var el = $(this);
-					toDataURL('http://faid2.c1.is?url='+encodeURIComponent(el.data('img64'))).then(dataUrl => {
+					toDataURL('https://wsrv.nl/?url='+encodeURIComponent(el.data('img64'))+'&w=1350&h=1350').then(dataUrl => {
 						el.attr('src', dataUrl).removeAttr('data-img64');
 					});
 				});
