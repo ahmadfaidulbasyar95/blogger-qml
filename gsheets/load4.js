@@ -104,6 +104,10 @@ window.__sheetson_token = window.__sheetson_token.split('--');
 							gsheets_load_(out);
 							gsheets_load_dt[0].push(id);
 							gsheets_load_dt[1].push(out);
+							if (gsheets_load_dt[0].length > 10) {
+								gsheets_load_dt[0].shift();
+								gsheets_load_dt[1].shift();
+							}
 							localStorage.setItem('gsheets_load_dt', JSON.stringify(gsheets_load_dt));
 						}else{
 							__sheetson_load.html('<h3 style="margin:200px 0px; text-align:center;color:red;">Error !!!<br>Data Tidak Ditemukan.</h3>');
