@@ -84,7 +84,7 @@ window.__sheetson_token = window.__sheetson_token.split('--');
 		if (id > 1) {
 			var gsheets_load_dt = localStorage.getItem('gsheets_load_dt');
 			gsheets_load_dt = gsheets_load_dt ? JSON.parse(gsheets_load_dt) : [[],[]];
-			var id_ = gsheets_load_dt[0].indexOf(id);
+			var id_ = gsheets_load_dt[0].indexOf(window.__sheetson_sheet+id);
 			if (id_ != -1) {
 				gsheets_load_(gsheets_load_dt[1][id_]);
 			}else{
@@ -102,7 +102,7 @@ window.__sheetson_token = window.__sheetson_token.split('--');
 					.then((out) => {
 						if (out.result.valueRanges[1].values != undefined) {
 							gsheets_load_(out);
-							gsheets_load_dt[0].push(id);
+							gsheets_load_dt[0].push(window.__sheetson_sheet+id);
 							gsheets_load_dt[1].push(out);
 							if (gsheets_load_dt[0].length > 10) {
 								gsheets_load_dt[0].shift();
