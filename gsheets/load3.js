@@ -6,12 +6,12 @@ const toDataURL = url => fetch(url)
 		reader.onerror = reject
 		reader.readAsDataURL(blob)
 	}));
-const gsheets_load = () => {
-	var __sheetson_load = $('#__sheetson_load');
-	var __sheetson_load_ = __sheetson_load.html();
-	__sheetson_load.html('<h3 style="margin:200px 0px; text-align:center;">Memuat Data ...<br>Mohon tunggu sebentar !!</h3>');
-	var id = new URLSearchParams(window.location.search).get('i');
-	if (id > 1) {
+window.__sheetson_token = window.__sheetson_token.split('--');
+(function() {
+	window.addEventListener('load', function() { 
+		$('html, body').animate({
+			scrollTop: $('#__sheetson_load').offset().top - 150
+		}, 2000);
 		function gsheets_load_(out) {
 			var page_sizes  = { 'A4':[210,297], 'A5':[148,210], 'A6':[105,148], 'A7':[74,105] };
 			var orientation = __sheetson_load.data('orientation') ?? 'P';
@@ -77,35 +77,45 @@ const gsheets_load = () => {
 				});
 			});
 		}
-		gapi.client.init({
-		  'apiKey': window.__sheetson_token[0], // {APIKEY}
-		  'discoveryDocs': ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
-		})
-		.then(() => {
-		  return gapi.client.sheets.spreadsheets.values.batchGet({
-		    spreadsheetId: window.__sheetson_token[1], // {SPREADSHEET_ID}
-		    ranges: [window.__sheetson_sheet+'!1:1',window.__sheetson_sheet+'!'+id+':'+id], // for example: List 1!A1:B6
-		  })
-		})
-		.then((out) => {
-			if (out.result.valueRanges[1].values != undefined) {
-				gsheets_load_(out);
+		var __sheetson_load = $('#__sheetson_load');
+		var __sheetson_load_ = __sheetson_load.html();
+		__sheetson_load.html('<h3 style="margin:200px 0px; text-align:center;">Memuat Data ...<br>Mohon tunggu sebentar !!</h3>');
+		var id = new URLSearchParams(window.location.search).get('i');
+		if (id > 1) {
+			var gsheets_load_dt = localStorage.getItem('gsheets_load_dt');
+			gsheets_load_dt = gsheets_load_dt ? JSON.parse(gsheets_load_dt) : [[],[]];
+			var id_ = gsheets_load_dt[0].indexOf(id);
+			if (id_ != -1) {
+				gsheets_load_(gsheets_load_dt[1][id_]);
 			}else{
-				__sheetson_load.html('<h3 style="margin:200px 0px; text-align:center;color:red;">Error !!!<br>Data Tidak Ditemukan.</h3>');
+				const gsheets_load = () => {
+					gapi.client.init({
+						'apiKey': window.__sheetson_token[0], // {APIKEY}
+						'discoveryDocs': ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+					})
+					.then(() => {
+						return gapi.client.sheets.spreadsheets.values.batchGet({
+							spreadsheetId: window.__sheetson_token[1], // {SPREADSHEET_ID}
+							ranges: [window.__sheetson_sheet+'!1:1',window.__sheetson_sheet+'!'+id+':'+id], // for example: List 1!A1:B6
+						})
+					})
+					.then((out) => {
+						if (out.result.valueRanges[1].values != undefined) {
+							gsheets_load_(out);
+							gsheets_load_dt[0].push(id);
+							gsheets_load_dt[1].push(out);
+							localStorage.setItem('gsheets_load_dt', JSON.stringify(gsheets_load_dt));
+						}else{
+							__sheetson_load.html('<h3 style="margin:200px 0px; text-align:center;color:red;">Error !!!<br>Data Tidak Ditemukan.</h3>');
+						}
+					}).catch((err) => {
+						__sheetson_load.html('<h3 style="margin:200px 0px; text-align:center;color:red;">Error !!!<br>'+err.result.error.message+'</h3>');
+					});
+				};
+				gapi.load('client', gsheets_load);
 			}
-		}).catch((err) => {
-			__sheetson_load.html('<h3 style="margin:200px 0px; text-align:center;color:red;">Error !!!<br>'+err.result.error.message+'</h3>');
-		});
-	}else{
-		__sheetson_load.html('<h3 style="margin:200px 0px; text-align:center;color:red;">Error !!!<br>ID Tidak Boleh Kosong.</h3>');
-	}
-};
-window.__sheetson_token = window.__sheetson_token.split('--');
-(function() {
-	window.addEventListener('load', function() { 
-		$('html, body').animate({
-			scrollTop: $('#__sheetson_load').offset().top - 150
-		}, 2000);
-		gapi.load('client', gsheets_load);
+		}else{
+			__sheetson_load.html('<h3 style="margin:200px 0px; text-align:center;color:red;">Error !!!<br>ID Tidak Boleh Kosong.</h3>');
+		}		
 	}, false);
 })();
