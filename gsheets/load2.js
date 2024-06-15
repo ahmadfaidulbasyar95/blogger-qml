@@ -61,7 +61,7 @@ const gsheets_load = () => {
 				}).append(iframe.document.getElementById('__sheetson_qrcode'));
 				$(iframe.document.body).find('[data-img64]').each(function(el) {
 					var el = $(this);
-					toDataURL('https://testing-faid.000webhostapp.com?url='+encodeURIComponent(el.data('img64'))).then(dataUrl => {
+					toDataURL('http://faid2.c1.is?url='+encodeURIComponent(el.data('img64'))).then(dataUrl => {
 						el.attr('src', dataUrl).removeAttr('data-img64');
 					});
 				});
