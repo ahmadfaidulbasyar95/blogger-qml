@@ -33,7 +33,6 @@
 					var __sheetson_more  = $('#__sheetson_more');
 					var __sheetson_sheet = '';
 					var __sheetson_data  = [];
-
 					function __sheetson_data_load() {
 						if (__sheetson_sheet.lastIndex > 2) {
 							var limit = 100;
@@ -70,6 +69,18 @@
 					__sheetson_more.on('click', function(event) {
 						event.preventDefault();
 						__sheetson_data_load();
+					});
+					__sheetson_body.on('click', '.__sheetson_edit', function(event) {
+						event.preventDefault();
+						$(this).hide().siblings('.__sheetson_save,.__sheetson_cancel').show().parents('tr').children('._field').each(function(index, el) {
+							$(this).html('<input type="text" name="input" value="'+$(this).html()+'" />');
+						});
+					});
+					__sheetson_body.on('click', '.__sheetson_cancel', function(event) {
+						event.preventDefault();
+						$(this).hide().siblings('.__sheetson_save').hide().siblings('.__sheetson_edit').show().parents('tr').children('._field').each(function(index, el) {
+							$(this).html($(this).children('input').attr('value'));
+						});
 					});
 					$('#__sheetson_sheet').on('change', function(event) {
 						__sheetson_more.hide();
