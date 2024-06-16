@@ -59,7 +59,11 @@
 								}
 								__sheetson_body.append(html);
 							}).catch((err) => {
-								__sheetson_head.html('<h3 style="margin:200px 0px; text-align:center;color:red;">Error !!!<br>'+err.result.error.message+'</h3>');
+								__sheetson_body.append('<tr id="__sheetson_body_msg"><td style="text-align:center;color:red;" colspan="'+(__sheetson_sheet.field.length+2)+'">Error !!!<br>'+err.result.error.message+'</td></tr>');
+								setTimeout(function() {
+									__sheetson_data_load();
+									$('#__sheetson_body_msg').remove();
+								}, 5000);
 							});
 						}
 					}
@@ -89,7 +93,10 @@
 								__sheetson_data = [];
 								__sheetson_data_load();
 							}).catch((err) => {
-								__sheetson_head.html('<h3 style="margin:200px 0px; text-align:center;color:red;">Error !!!<br>'+err.result.error.message+'</h3>');
+								__sheetson_head.html('<tr><td style="text-align:center;color:red;">Error !!!<br>'+err.result.error.message+'</td></tr>');
+								setTimeout(function() {
+									$('#__sheetson_sheet').trigger('change');
+								}, 5000);
 							});
 						}else{
 							__sheetson_head.html('');
