@@ -4,10 +4,10 @@ window.__price_list = {
 		'title' : ['ISBN','ISBN + HAKI','ISBN + Parafrase','ISBN + HAKI + Parafrase','QRCBN','QRCBN + HAKI','QRCBN + Parafrase','QRCBN + HAKI + Parafrase','Cetak Ulang'],
 		'price' : [400000,850000,500000,950000,150000,600000,250000,700000,0]
 	},
-	'paket_eks_min' : [30,30,30,30,1,1,1],
+	'paket_eks_min' : [30,30,30,30,1,1,1,1,1],
 	'paket_disc' : {
 		'eks_min' : 50,
-		'price' : [300000,300000,300000,300000,150000,150000,0]
+		'price' : [300000,300000,300000,300000,150000,150000,150000,150000,0]
 	},
 	'book_disc' : {
 		'eks_min' : [15,35,50,65,80,100,150,200],
