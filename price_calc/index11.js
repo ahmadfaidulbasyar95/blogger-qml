@@ -1,8 +1,8 @@
 window.__price_admin = 'qwerty';
 window.__price_list = {
 	'paket' : {
-		'title' : ['ISBN','ISBN + HAKI','ISBN + Parafrase','ISBN + HAKI + Parafrase','QRCBN','QRCBN + HAKI','Cetak Ulang'],
-		'price' : [400000,850000,500000,950000,150000,600000,0]
+		'title' : ['ISBN','ISBN + HAKI','ISBN + Parafrase','ISBN + HAKI + Parafrase','QRCBN','QRCBN + HAKI','QRCBN + Parafrase','QRCBN + HAKI + Parafrase','Cetak Ulang'],
+		'price' : [400000,850000,500000,950000,150000,600000,250000,700000,0]
 	},
 	'paket_eks_min' : [30,30,30,30,1,1,1],
 	'paket_disc' : {
